@@ -1,4 +1,9 @@
 ---
+
+- name: Copy the mime types file.
+  template: src=mime.types.j2 dest={{nginx_conf_dir}}/mime.types
+  tags: [configuration,nginx]
+
 - name: Copy the nginx configuration file
   template: src=nginx.conf.j2 dest={{nginx_conf_dir}}/nginx.conf
   notify:
@@ -30,6 +35,7 @@
   notify:
    - reload nginx
   tags: [configuration,nginx]
+
 
 - name: Create the configurations for independent config file for streams
   template: src=config_stream.conf.j2 dest={{nginx_conf_dir}}/conf.d/stream/{{ item }}.conf
